@@ -1,0 +1,12 @@
+.dishes {
+  width: 100%;
+}
+
+.dishes-list {
+  width: 100%;
+  padding: 20px;
+  border-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+}
+
+.dish-item {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 2px solid grey;
+  border-radius: 6px;
+}
+
+.dish-item-content {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  gap: 10px;
+}
+
+.dish-icon-container {
+  min-width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+}
+
+.dish-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dish-image {
+  width: 125px;
+  height: 125px;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .dish-image {
+    width: 75px;
+    height: 75px;
+  }
+
+  .dish-item-content {
+    width: 45%;
+  }
+}
+
+.dish-calories {
+  align-self: center;
+  color: #faa533;
+  font-weight: bold;
+}
+
+.quantity-container {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  background-color: #4caf50;
+  padding: 5px 10px;
+  margin-top: 10px;
+  border-radius: 50px;
+}
+
+.quantity-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-button:hover {
+  background-color: #45a049;
+  color: white;
+}
+
+.quantity-button:disabled {
+  background-color: #c4c4c4;
+  cursor: not-allowed;
+}
+
+.quantity {
+  font-size: 1.2rem;
+  color: white;
+  margin: 0 10px;
+}
+
+.customization-text {
+  font-size: 1.2rem;
+  color: #806af5;
+  margin-top: 10px;
+}
+
+.not-available-text {
+  color: red;
+}
