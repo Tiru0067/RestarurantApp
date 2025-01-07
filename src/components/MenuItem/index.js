@@ -22,27 +22,32 @@ const MenuItem = ({dish, index, activeMenuId}) => {
   const circleColor = index % 2 === 0 ? 'green' : 'red'
 
   const updateCart = quantityChange => {
-    setQuantity(prev => prev + quantityChange)
+    setQuantity(prev => Math.max(prev + quantityChange, 0))
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.dishId === dishId)
       if (existingItem) {
-        return prevCart.map(item =>
+        const updatedCart = prevCart.map(item =>
           item.dishId === dishId
             ? {...item, quantity: item.quantity + quantityChange}
             : item,
         )
+        return updatedCart.filter(item => item.quantity > 0)
       }
-      return [
-        ...prevCart,
-        {
-          dishId,
-          dishName,
-          dishPrice,
-          dishImage,
-          quantity: quantityChange > 0 ? 1 : 0,
-          categoryId: activeMenuId,
-        },
-      ]
+      if (quantityChange > 0) {
+        return [
+          ...prevCart,
+          {
+            dishId,
+            dishName,
+            dishPrice,
+            dishImage,
+            quantity: 1,
+            categoryId: activeMenuId,
+          },
+        ]
+      }
+
+      return prevCart
     })
   }
 
@@ -74,7 +79,6 @@ const MenuItem = ({dish, index, activeMenuId}) => {
                 <button
                   type="button"
                   onClick={decreaseQuantity}
-                  disabled={quantity === 0}
                   className="quantity-button decrease"
                 >
                   -

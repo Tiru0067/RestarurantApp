@@ -28,6 +28,7 @@ const Navbar = () => {
                   : 'nav-list-item'
               }
               key={item.menuCategoryId}
+              value={item.menuCategoryId}
             >
               <button
                 type="button"
