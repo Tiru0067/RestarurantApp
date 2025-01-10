@@ -1,10 +1,10 @@
-import {useContext, useState} from 'react'
+import {useContext, useState, useEffect} from 'react'
 import {BsFillCircleFill} from 'react-icons/bs'
 import ApiDataContext from '../../context/ApiDataContext'
 import './index.css'
 
 const MenuItem = ({dish, index, activeMenuId}) => {
-  const {setCart} = useContext(ApiDataContext)
+  const {cart, setCart} = useContext(ApiDataContext)
   const [quantity, setQuantity] = useState(0)
 
   const {
@@ -22,7 +22,6 @@ const MenuItem = ({dish, index, activeMenuId}) => {
   const circleColor = index % 2 === 0 ? 'green' : 'red'
 
   const updateCart = quantityChange => {
-    setQuantity(prev => Math.max(prev + quantityChange, 0))
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.dishId === dishId)
       if (existingItem) {
@@ -55,6 +54,12 @@ const MenuItem = ({dish, index, activeMenuId}) => {
   const decreaseQuantity = () => {
     if (quantity > 0) updateCart(-1)
   }
+
+  useEffect(() => {
+    const currentQuantity =
+      cart.find(obj => obj.dishId === dishId)?.quantity || 0
+    setQuantity(currentQuantity)
+  }, [cart, dishId])
 
   return (
     <li className="dish-item">
