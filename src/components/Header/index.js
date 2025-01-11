@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <header>
-      <h1 className="app-title">UNI Resto Cafe</h1>
+      <h1 className="app-title">{apidata.restaurant_name}</h1>
       <div className="cart-container">
         <p>{ordersText}</p>
         <button type="button" className="cart-btn">
