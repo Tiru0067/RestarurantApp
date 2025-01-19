@@ -12,7 +12,7 @@ const MenuItemsList = () => {
       const filteredDishes = apidata.table_menu_list.filter(
         item => item.menu_category_id === activeMenuId,
       )
-      setDishes(filteredDishes[0].category_dishes)
+      setDishes(filteredDishes[0]?.category_dishes || [])
     }
   }, [apidata, activeMenuId])
 
