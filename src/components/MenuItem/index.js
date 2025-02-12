@@ -1,11 +1,10 @@
-import {useContext, useState, useEffect} from 'react'
+import {useContext} from 'react'
 import {BsFillCircleFill} from 'react-icons/bs'
-import ApiDataContext from '../../context/ApiDataContext'
+import DataContext from '../../context/DataContext'
 import './index.css'
 
-const MenuItem = ({dish, index, activeMenuId}) => {
-  const {cart, setCart} = useContext(ApiDataContext)
-  const [quantity, setQuantity] = useState(0)
+const MenuItem = ({dish, index}) => {
+  const {cart, increaseQuantity, decreaseQuantity} = useContext(DataContext)
 
   const {
     dish_id: dishId,
@@ -20,46 +19,15 @@ const MenuItem = ({dish, index, activeMenuId}) => {
   } = dish
 
   const circleColor = index % 2 === 0 ? 'green' : 'red'
+  const quantity = cart?.find(obj => obj.dishId === dishId)?.quantity || 0
 
-  const updateCart = quantityChange => {
-    setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.dishId === dishId)
-      if (existingItem) {
-        const updatedCart = prevCart.map(item =>
-          item.dishId === dishId
-            ? {...item, quantity: item.quantity + quantityChange}
-            : item,
-        )
-        return updatedCart.filter(item => item.quantity > 0)
-      }
-      if (quantityChange > 0) {
-        return [
-          ...prevCart,
-          {
-            dishId,
-            dishName,
-            dishPrice,
-            dishImage,
-            quantity: 1,
-            categoryId: activeMenuId,
-          },
-        ]
-      }
+  const handleIncreaseQuantity = () => increaseQuantity(dishId)
 
-      return prevCart
-    })
+  const handleDecreaseQuantity = () => {
+    if (quantity > 0) {
+      decreaseQuantity(dishId)
+    }
   }
-
-  const increaseQuantity = () => updateCart(1)
-  const decreaseQuantity = () => {
-    if (quantity > 0) updateCart(-1)
-  }
-
-  useEffect(() => {
-    const currentQuantity =
-      cart.find(obj => obj.dishId === dishId)?.quantity || 0
-    setQuantity(currentQuantity)
-  }, [cart, dishId])
 
   return (
     <li className="dish-item">
@@ -83,21 +51,21 @@ const MenuItem = ({dish, index, activeMenuId}) => {
               <div className="quantity-container">
                 <button
                   type="button"
-                  onClick={decreaseQuantity}
+                  onClick={handleDecreaseQuantity}
                   className="quantity-button decrease"
                 >
                   -
                 </button>
-                <p className="quantity">{quantity}</p>
+                <p className="quantity">{quantity > 0 ? quantity : '0'}</p>
                 <button
                   type="button"
-                  onClick={increaseQuantity}
+                  onClick={handleIncreaseQuantity}
                   className="quantity-button increase"
                 >
                   +
                 </button>
               </div>
-              {addonCat.length > 0 && (
+              {addonCat?.length > 0 && (
                 <p className="customization-text">Customizations available</p>
               )}
             </>

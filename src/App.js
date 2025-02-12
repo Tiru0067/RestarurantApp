@@ -4,7 +4,7 @@ import './App.css'
 import Header from './components/Header'
 import Navbar from './components/Navbar'
 import MenuItemsList from './components/MenuItemsList'
-import ApiDataContext from './context/ApiDataContext'
+import DataContext from './context/DataContext'
 
 const App = () => {
   const [apidata, setApidata] = useState([])
@@ -22,14 +22,56 @@ const App = () => {
     fetchData()
   }, [])
 
+  // update cart
+  const updateCart = (dishId, quantityChange) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.dishId === dishId)
+      if (existingItem) {
+        const updatedCart = prevCart.map(item =>
+          item.dishId === dishId
+            ? {...item, quantity: item.quantity + quantityChange}
+            : item,
+        )
+        return updatedCart.filter(item => item.quantity > 0)
+      }
+      if (quantityChange > 0) {
+        const dishes = apidata?.table_menu_list?.filter(
+          item => item.menu_category_id === activeMenuId,
+        )
+        const dish = dishes.find(item => item.dishId === dishId) || {}
+        return [
+          ...prevCart,
+          {
+            dishId,
+            ...dish,
+            quantity: 1,
+            categoryId: activeMenuId,
+          },
+        ]
+      }
+      return prevCart
+    })
+  }
+
+  const increaseQuantity = dishId => updateCart(dishId, 1)
+  const decreaseQuantity = dishId => updateCart(dishId, -1)
+
   return (
-    <ApiDataContext.Provider
-      value={{apidata, cart, setCart, activeMenuId, setActiveMenuId}}
+    <DataContext.Provider
+      value={{
+        apidata,
+        cart,
+        setCart,
+        activeMenuId,
+        setActiveMenuId,
+        increaseQuantity,
+        decreaseQuantity,
+      }}
     >
       <Header />
       <Navbar />
       <MenuItemsList />
-    </ApiDataContext.Provider>
+    </DataContext.Provider>
   )
 }
 

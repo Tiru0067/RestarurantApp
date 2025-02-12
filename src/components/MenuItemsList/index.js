@@ -1,10 +1,10 @@
 import {useContext, useEffect, useState} from 'react'
 import './index.css'
 import MenuItem from '../MenuItem'
-import ApiDataContext from '../../context/ApiDataContext'
+import DataContext from '../../context/DataContext'
 
 const MenuItemsList = () => {
-  const {apidata, activeMenuId} = useContext(ApiDataContext)
+  const {apidata, activeMenuId} = useContext(DataContext)
   const [dishes, setDishes] = useState([])
 
   useEffect(() => {

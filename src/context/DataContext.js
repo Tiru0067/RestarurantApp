@@ -1,11 +1,13 @@
 import {createContext} from 'react'
 
-const ApiDataContext = createContext({
+const DataContext = createContext({
   apidata: [],
   cart: [],
   setCart: () => {},
   activeMenuId: '11',
   setActiveMenuId: () => {},
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
 })
 
-export default ApiDataContext
+export default DataContext

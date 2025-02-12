@@ -1,9 +1,9 @@
 import {useContext, useState, useEffect} from 'react'
 import './index.css'
-import ApiDataContext from '../../context/ApiDataContext'
+import DataContext from '../../context/DataContext'
 
 const Navbar = () => {
-  const {apidata, activeMenuId, setActiveMenuId} = useContext(ApiDataContext)
+  const {apidata, activeMenuId, setActiveMenuId} = useContext(DataContext)
   const [menuList, setMenuList] = useState([])
 
   useEffect(() => {
