@@ -15,13 +15,8 @@ const Header = () => {
   }, [apidata])
 
   useEffect(() => {
-<<<<<<< HEAD
-    // const totalItemsQuantity = cart.reduce((sum, obj) => sum + obj.quantity, 0)
-    const totalItemsQuantity = cart.length
-=======
     const totalItemsQuantity = cart.reduce((sum, obj) => sum + obj.quantity, 0)
     // const totalItemsQuantity = cart.length
->>>>>>> updated app.js
     setCartAmount(totalItemsQuantity)
   }, [cart, activeMenuId])
 
