@@ -4,7 +4,7 @@ import MenuItem from '../MenuItem'
 import DataContext from '../../context/DataContext'
 
 const MenuItemsList = () => {
-  const {apidata, activeMenuId} = useContext(DataContext)
+  const {loading, apidata, activeMenuId} = useContext(DataContext)
   const [dishes, setDishes] = useState([])
 
   useEffect(() => {
@@ -18,17 +18,21 @@ const MenuItemsList = () => {
 
   return (
     <main className="dishes">
-      <ul className="dishes-list">
-        {dishes.length > 0 &&
-          dishes.map((item, index) => (
-            <MenuItem
-              key={item.dish_id}
-              dish={item}
-              index={index}
-              activeMenuId={activeMenuId}
-            />
-          ))}
-      </ul>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul className="dishes-list">
+          {dishes.length > 0 &&
+            dishes.map((item, index) => (
+              <MenuItem
+                key={item.dish_id}
+                dish={item}
+                index={index}
+                activeMenuId={activeMenuId}
+              />
+            ))}
+        </ul>
+      )}
     </main>
   )
 }

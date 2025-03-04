@@ -10,14 +10,20 @@ const App = () => {
   const [apidata, setApidata] = useState([])
   const [activeMenuId, setActiveMenuId] = useState('11')
   const [cart, setCart] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
-      const url =
-        'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details'
-      const response = await fetch(url)
-      const data = await response.json()
-      setApidata(data[0])
+      try {
+        const url =
+          'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details'
+        const response = await fetch(url)
+        const data = await response.json()
+        setApidata(data[0])
+        setLoading(false)
+      } catch (err) {
+        console.log(err.message)
+      }
     }
     fetchData()
   }, [])
@@ -59,6 +65,7 @@ const App = () => {
   return (
     <DataContext.Provider
       value={{
+        loading,
         apidata,
         cart,
         setCart,

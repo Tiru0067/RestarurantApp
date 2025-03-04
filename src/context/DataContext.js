@@ -1,6 +1,7 @@
 import {createContext} from 'react'
 
 const DataContext = createContext({
+  loading: true,
   apidata: [],
   cart: [],
   setCart: () => {},
